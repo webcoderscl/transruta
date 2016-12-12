@@ -17,7 +17,7 @@
 */
 //$config['base_url']	= 'http://riharkapp.esy.es/RihProject/';
 //$config['base_url']	= 'http://www.rodrihgo.xyz/MagdatoProject/';
-$config['base_url']	= 'http://159.203.219.96/codemakers/code/a';
+$config['base_url']	= 'http://159.203.219.96/codemakers/code/';
 
 /*
 |--------------------------------------------------------------------------
