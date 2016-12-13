@@ -286,7 +286,7 @@ class Login extends CI_Controller
             $usertype = 'Admin';
         }
         //example of commit
-        $variable = "hola";
+    
         $query_prev = $this->db->select('*')->get_where('account', array('Muser' => $email  ));
 
         if ($query_prev->num_rows() > 0) {
