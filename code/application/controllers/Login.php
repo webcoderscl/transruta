@@ -26,7 +26,6 @@ class Login extends CI_Controller
 
         $usr = $this->session->userdata('user_login');
         $adm = $this->session->userdata('admin_login');
-
         if ($usr == 1 || $adm == 1){
             $usertype = $this->session->userdata('login_type');
             redirect(base_url() . '?'.$usertype.'/dashboard', 'refresh');
@@ -56,16 +55,19 @@ class Login extends CI_Controller
 
 
         if ($this->form_validation->run() == FALSE) {
+
             $page_data['flash_message'] = $this->session->flashdata('flash_message');
             $page_data['page_title'] = 'Login Account';
             $this->load->view('signin',$page_data);
         } else {
             $usr = $this->session->userdata('user_login');
             $adm = $this->session->userdata('admin_login');
+
             if ($usr == 1 || $adm == 1){
                 $usertype = $this->session->userdata('login_type');
                 redirect(base_url() . '?'.$usertype.'/dashboard', 'refresh');
             }
+
 
                 //$this->load->view('startpage');
 
@@ -277,6 +279,7 @@ class Login extends CI_Controller
     {
         $email = $this->input->post('email');
         //USEFUL TO CHOOSE FILE OF VIEWS
+
         $usertype = '';
         $mailAdmin = 'drigox90rih@gmail.com';
         if ($email == $mailAdmin){

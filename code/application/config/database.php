@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['development']['hostname'] = '127.0.0.1'; //o localhost
 $db['development']['username'] = 'root';
-$db['development']['password'] = 'doceankeyssh';//'zu79pm5GaF';
+$db['development']['password'] = 'doceanrootrih';//'zu79pm5GaF';
 $db['development']['database'] = 'dev_bolsa_de_carga_transporte';
 $db['development']['dbdriver'] = 'mysqli';
 $db['development']['dbprefix'] = '';
