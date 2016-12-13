@@ -283,10 +283,10 @@ class Login extends CI_Controller
         $usertype = '';
         $mailAdmin = 'drigox90rih@gmail.com';
         if ($email == $mailAdmin){
-            $usertype = 'Admin';
+            $usertype = ADMIN;
         }
         //example of commit
-    
+
         $query_prev = $this->db->select('*')->get_where('account', array('Muser' => $email  ));
 
         if ($query_prev->num_rows() > 0) {
