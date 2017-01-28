@@ -59,6 +59,7 @@
 
     <?php $usr = $this->session->userdata('login_type'); ?>
     <script type="text/javascript">
+    alert("asff");
         <?php echo 'usrtype = "'.$usr.'";'; ?>
         setInterval(
         function (){
