@@ -153,6 +153,8 @@ class Login extends CI_Controller
      function registrar($option="none")
     {
         $page_data["page_title"] = "Crear Cuenta";
+        $page_data["regiones"] = $this->Crud_model->fetch_tabla('region',50,0);
+        $page_data["ciudades"] = $this->Crud_model->fetch_tabla('ciudad',600,0);
         if($option == "add"){
         	 $email = $this->input->post('Muser');
 	        $password = $this->input->post('Mpassword');
@@ -171,7 +173,8 @@ class Login extends CI_Controller
             $razon_social = $this->input->post('razon_social');
             $direccion = $this->input->post('direccion');
             $ciudad = $this->input->post('ciudad');
-
+            $ciudad_origen = $this->input->post('ciudad_origen');
+            $region_origen = $this->input->post('region_origen');
 
 
 	        //USEFUL TO CHOOSE FILE OF VIEWS
@@ -216,7 +219,9 @@ class Login extends CI_Controller
                             "fono_contacto" => $fono_rep_legal,
                             "nombre_representante_legal" => $nombre_rep_legal,
                             "rut_representante_legal" => $rut_rep_legal,
-                            "mail_contacto" => $email
+                            "mail_contacto" => $email,
+                            "idregion_origen" => $region_origen,
+                            "idciudad_origen" => $ciudad_origen
                     );
 	            $this->Crud_model->table_insert("empresa",$data);
 	            $usertype = 'Transportista';
@@ -248,7 +253,9 @@ class Login extends CI_Controller
                             "telefono_representante_legal" => $fono_rep_legal,
                             "nombre_representante_legal" => $nombre_rep_legal,
                             "rut_representante_legal" => $rut_rep_legal,
-                            "mail_contacto" => $email
+                            "mail_contacto" => $email,
+                            "idregion_origen" => $region_origen,
+                            "idciudad_origen" => $ciudad_origen
                     );
 	            $this->Crud_model->table_insert("empresa",$data);
 

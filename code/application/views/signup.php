@@ -78,6 +78,44 @@
                     <div class="form-group m-bottom-md">
                         <input type="text" data-parsley-required="true" name="direccion" class="form-control" placeholder="Dirección" autocomplete="on" required/>
                     </div>
+                    <?php 
+                     echo '<div class="form-group m-bottom-md">';
+                    echo '<label for="exampleInputEmail1">Región de Destino</label>';
+                    echo '<select name="region_origen" id="region_origen" data-parsley-required="true" class="form-control validation" onchange="ciudad_region(this.value,\'ciudad_origen\');">';
+                    echo '<option value="-1" cod="-1">Seleccione Región</option>';
+                        if(isset($regiones)){
+                            //print_r($regiones);
+                             foreach($regiones as $s => $v):
+                                echo '<option value="'.$v["idregion"].'" cod="'.$v["idregion"].'"';
+                                if($topic == $v) echo 'selected';
+                                echo '>';
+                                echo $v["nombre"];
+                                echo '</option>';
+
+                            endforeach;
+                        }
+                    echo '</select>';
+                    echo '</div>';
+
+                    echo '<div class="form-group">';
+                    echo '<label for="exampleInputEmail1">Ciudad de Origen</label>';
+                    echo '<select name="ciudad_origen" disabled id="ciudad_origen" data-parsley-required="true" class="form-control validation"
+                         onchange="get_distancia();"
+                     >';
+                    echo '<option value="-1" cod="-1">Seleccione Ciudad</option>';
+                        if(isset($ciudades)){
+                             foreach($ciudades as $s => $v):
+                                echo '<option value="'.$v["idciudad"].'" cod="'.$v["idregion_fk"].'"';
+                                if($topic == $v) echo 'selected';
+                                echo '>';
+                                echo $v["nombre"];
+                                echo '</option>';
+
+                            endforeach;
+                        }
+                    echo '</select>';
+                    echo '</div>';
+                    ?>
                     <div class="form-group m-bottom-md">
                         <input type="text" data-parsley-required="true" name="ciudad" class="form-control" placeholder="Ciudad" autocomplete="on" required/>
                     </div>
@@ -207,6 +245,49 @@
 			        }
 			}});
 		});
+
+
+
+    //Listar las ciudades por region escogida
+
+    function hideAll(){
+        $("#ciudad_origen").find("option").each(function(){ $(this).hide(); });
+        $("#ciudad_origen").find("option[cod='-1']").show();
+    }
+
+
+    $(function(){
+        hideAll();
+    });
+
+    function ciudad_region(value, ciudad)
+        {
+
+                $("#" + ciudad).prop("disabled",false);
+                if(value.toString()  == "-1"){
+
+                    $("#" + ciudad).find("option").each(function(){
+                        $(this).hide();
+                    });
+                    $("#" + ciudad).prop("disabled",true);
+
+                }else{
+                    $("#" + ciudad).find("option").each(function(){
+                        $(this).hide();
+                    });
+
+                    $("#" + ciudad).find("option[cod='"+value+"']").each(function(){
+                        //alert($(this).text());
+                        $(this).show();
+                    });
+
+                }
+                $("#" + ciudad).find("option[cod='-1']").show();
+                $("#"+ciudad).find("option[value='-1']").prop('selected',true);
+
+
+        }
+
 	</script>
 
 </body>
