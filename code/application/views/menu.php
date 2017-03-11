@@ -103,8 +103,11 @@
                 <li><a href="<?php echo  base_url().'?'.$type;?>/buscarcarga" class="dest-item-menu">Buscar Carga <i class="fa fa-search" aria-hidden="true"></i></a></li>
 
                 <li><a href="<?php echo  base_url().'?'.$type;?>/misofertas"><span class="badge pull-right"><?php if(isset($num_ofertas)) echo $num_ofertas; ?></span> Mis Ofertas</a></li>
+                
+
                 <li><a href="<?php echo  base_url().'?'.$type;?>/missolicitudesenviadas"><span class="badge pull-right" style="background: #f6a821; color: #fff; border-radius: 3px;"> <?php if(isset($num_solicitudes_enviadas)) echo $num_solicitudes_enviadas; ?></span> Solicitudes Enviadas en Curso</a></li>
-		        <li><a href="<?php echo  base_url().'?'.$type;?>/missolicitudesrecibidas"><span class="badge pull-right" style="background: #f6a821; color: #fff; border-radius: 3px;"> <?php if(isset($num_solicitudes_recibidas)) echo $num_solicitudes_recibidas; ?></span> Peticiones Recibidas en Curso</a></li>
+		        
+              
                 <li style="border-bottom: 1px dashed rgb(75, 75, 75); padding-bottom:10px;"><a href="<?php echo  base_url().'?'.$type;?>/historial"><span class="badge pull-right"><?php if(isset($num_historial)) echo $num_historial; ?></span> Mi Historial</a></li>
 
                 <li class="nav-category">Mi Cuenta</li>
@@ -138,10 +141,12 @@
                 <?php if($enabled == 1){ ?>
                 <li class="nav-category">Plataforma</li>
                 <li><a href="<?php echo  base_url().'?'.$type;?>/buscarcamion">Buscar Camión <i class="fa fa-search" aria-hidden="true"></i></a></li>
-                <li style="border-bottom: 1px dashed rgb(75, 75, 75);"><a href="<?php echo  base_url().'?'.$type;?>/missolicitudesenviadas"><span class="badge pull-right" style="background: #f6a821; color: #fff; border-radius: 3px;"><?php if(isset($num_solicitudes_enviadas)) echo $num_solicitudes_enviadas; ?></span> Solicitudes Enviadas en Curso</a></li>
-
+                
+                
                 <li><a href="<?php echo  base_url().'?'.$type;?>/ofrecercarga">Ofrecer Carga</a></li>
                 <li><a href="<?php echo  base_url().'?'.$type;?>/misofertas"><span class="badge pull-right"><?php if(isset($num_ofertas)) echo $num_ofertas; ?></span> Mis Ofertas</a></li>
+
+
 		        <li style="border-bottom: 1px dashed rgb(75, 75, 75);"><a href="<?php echo  base_url().'?'.$type;?>/missolicitudesrecibidas"><span class="badge pull-right" style="background: #f6a821; color: #fff; border-radius: 3px;"><?php if(isset($num_solicitudes_recibidas)) echo $num_solicitudes_recibidas; ?></span> Peticiones Recibidas en Curso</a></li>
                 <li><a href="<?php echo  base_url().'?'.$type;?>/historial"><span class="badge pull-right"><?php if(isset($num_historial)) echo $num_historial; ?></span> Mi Historial</a></li>
                   <?php } ?>

@@ -217,14 +217,50 @@
 	                                echo '<label for="exampleInputEmail1">R.U.T</label>';
 	                                echo '<input id="misdatosemp" name="rut" pattern="^[0-9]{6,9}-[0-9Kk]$" data-parsley-required="true" class="form-control" type="text" value="'.$mis_datos[0]["RUT"].'"/>';
 	                                echo '</div>';
+	                                
+	                                 echo '<div class="form-group m-bottom-md">';
+				                    echo '<label for="exampleInputEmail1">Región de Origen</label>';
+				                    echo '<select name="region_origen" id="region_origen" data-parsley-required="true" class="form-control validation" onchange="ciudad_region(this.value,\'ciudad_origen\');" required>';
+				                    echo '<option value="-1" cod="-1">Seleccione Región</option>';
+				                        if(isset($regiones)){
+				                            //print_r($regiones);
+				                             foreach($regiones as $s => $v):
+				                                echo '<option value="'.$v["idregion"].'" cod="'.$v["idregion"].'"';
+				                                if($mis_datos[0]["idregion_origen"] == $v["idregion"]) echo 'selected';
+				                                echo '>';
+				                                echo $v["nombre"];
+				                                echo '</option>';
+
+				                            endforeach;
+				                        }
+				                    echo '</select>';
+				                    echo '</div>';
+
+				                    echo '<div class="form-group">';
+				                    echo '<label for="exampleInputEmail1">Ciudad de Origen</label>';
+				                    echo '<select name="ciudad_origen" disabled id="ciudad_origen" data-parsley-required="true" class="form-control validation"
+				                         onchange="get_distancia();" required
+				                     >';
+				                    echo '<option value="-1" cod="-1">Seleccione Ciudad</option>';
+				                        if(isset($ciudades)){
+				                             foreach($ciudades as $s => $v):
+				                                echo '<option value="'.$v["idciudad"].'" cod="'.$v["idregion_fk"].'"';
+				                                if($mis_datos[0]["idciudad_origen"] == $v["idciudad"]) echo 'selected';
+				                                echo '>';
+				                                echo $v["nombre"];
+				                                echo '</option>';
+
+				                            endforeach;
+				                        }
+				                    echo '</select>';
+				                    echo '</div>';
+
+
 	                                echo '<div class="form-group">';
 	                                echo '<label for="exampleInputEmail1">Dirección Principal</label>';
 	                                echo '<input id="misdatosemp" name="direccion" data-parsley-required="true" class="form-control" type="text" value="'.$mis_datos[0]["direccion"].'"/>';
 	                                echo '</div>';
-	                                echo '<div class="form-group">';
-	                                echo '<label for="exampleInputEmail1">Ciudad</label>';
-	                                echo '<input id="misdatosemp" name="ciudad" data-parsley-required="true" class="form-control" type="text" value="'.$mis_datos[0]["ciudad"].'"/>';
-	                                echo '</div>';
+
 	                                echo '<div class="form-group">';
 	                                echo '<label style="width:100%;" for="exampleInputEmail1">Teléfono</label>';
 																	$tlf = $mis_datos[0]["fono"];
@@ -280,7 +316,7 @@
 									echo '<input name="rut_rep_legal" data-parsley-required="true" class="form-control" type="text" value="'.$mis_datos[0]["rut_representante_legal"].'"/>';
 	                                echo '</div>';
 									*/
-	                echo '<div class="form-group">';
+	                				echo '<div class="form-group">';
 									echo '<label style="width:100%;" for="exampleInputEmail1">Celular de Contacto</label>';
 									$trl = $mis_datos[0]["telefono_representante_legal"];
 									$trl_arr = preg_split('/\s+/',$trl,NULL, PREG_SPLIT_NO_EMPTY);
@@ -288,7 +324,7 @@
 									echo '<input type="hidden" name="prefix_fono_rep_legal" autocomplete="on" value="+569" />';
 									echo '	<input type="text" style="width: 15%;display: inline-block;" data-parsley-required="true" name="" class="form-control" placeholder="+569" autocomplete="on" disabled="disabled" value="+569" />
 											<input name="fono_rep_legal" style="width: 84%;display: inline-block;" data-parsley-required="true" pattern="^(\d{6,8})$" maxlength="9" class="form-control" type="text" value="'.$trl.'"/>';
-	              	echo '</div>';
+	              					echo '</div>';
 
 									//echo '<div class="form-group">';
 									//echo '<label style="width:100%;" for="exampleInputEmail1">Teléfono de Contacto</label>';
@@ -319,6 +355,48 @@
 
 
 	<script type="text/javascript">
+
+		 //Listar las ciudades por region escogida
+
+    function hideAll(){
+        $("#ciudad_origen").find("option").each(function(){ $(this).hide(); });
+        $("#ciudad_origen").find("option[cod='-1']").show();
+    }
+
+
+    $(function(){
+        hideAll();
+    });
+
+    function ciudad_region(value, ciudad)
+        {
+
+                $("#" + ciudad).prop("disabled",false);
+                if(value.toString()  == "-1"){
+
+                    $("#" + ciudad).find("option").each(function(){
+                        $(this).hide();
+                    });
+                    $("#" + ciudad).prop("disabled",true);
+
+                }else{
+                    $("#" + ciudad).find("option").each(function(){
+                        $(this).hide();
+                    });
+
+                    $("#" + ciudad).find("option[cod='"+value+"']").each(function(){
+                        //alert($(this).text());
+                        $(this).show();
+                    });
+
+                }
+                $("#" + ciudad).find("option[cod='-1']").show();
+                $("#"+ciudad).find("option[value='-1']").prop('selected',true);
+
+
+        }
+
+
 		function showLenPwdValue(newValue, idserv)
 		{
 			document.getElementById("pwdrange"+idserv).innerHTML="len => " +newValue;

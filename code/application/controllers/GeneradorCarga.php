@@ -21,6 +21,7 @@ class GeneradorCarga extends CI_Controller
         $this->load->database();
         $this->load->model('Crud_model');
         $this->load->model('Email_model');
+        $this->load->model('Generic_model');
         $this->load->library("pagination");
         //$this->load->library('encryption');
         /*cache control*/
@@ -151,7 +152,6 @@ class GeneradorCarga extends CI_Controller
             $idAcc = $this->session->userdata('userid');
             $usrtype = $this->session->userdata('login_type');
             $idUserType = $this->Account_model->account_get_id_by_type($idAcc,$usrtype);
-
             $id = $this->session->userdata('userid');
             $usrtype = $this->session->userdata('login_type');
 
@@ -159,7 +159,7 @@ class GeneradorCarga extends CI_Controller
               $razon_social = $this->input->post('razon_social');
                $rut = $this->input->post('rut');
                $giro = $this->input->post('giro');
-               $direccion = $this->input->post('direccion');
+               $direccion = $this->input->post('direccion');               
                $ciudad = $this->input->post('ciudad');
                $prefix_fono = $this->input->post('prefix_fono');
                $fono = $this->input->post('fono');
@@ -302,6 +302,7 @@ class GeneradorCarga extends CI_Controller
             $page_data = array();
 
             $page_data["regiones"] = $this->Crud_model->fetch_tabla('region',50,0);
+            $page_data["ciudadesAll"] = $this->Crud_model->fetch_tabla('ciudad',600,0);
             $page_data["ciudades"] = $this->Crud_model->fetch_tabla('ciudad',600,0);
             $idAcc = $this->session->userdata('userid');
             $usrtype = $this->session->userdata('login_type');
@@ -367,6 +368,9 @@ class GeneradorCarga extends CI_Controller
                 $this->Engine_model->match_ofertas($usrtype,$idUserType);
                 $msg = "Oferta Creada satisfactoriamente... Revise la oferta en sección Mis Ofertas";
                 $page_data["msg_alerta"] = $msg;
+                
+                $this->Engine_model->match_ofertas($usrtype,$idUserType);
+
             }
             $page_data += $this->Generic_model->fillPageDataCounters($usrtype,$idUserType,$page_data,'ofrecercarga','Ofrecer Carga');
             $this->load->view('index', $page_data);
@@ -892,82 +896,7 @@ class GeneradorCarga extends CI_Controller
 
     }
 */
-    function missolicitudesenviadas($action="show",$idoferta = 0){
-    if ($this->session->userdata('user_login') != 1 || $this->session->userdata('enabled') != 1){
-            redirect(base_url(), 'refresh');
-        }
-        else{
-            $page_data = array();
-            $idAcc = $this->session->userdata('userid');
-            $usrtype = $this->session->userdata('login_type');
-            $idUserType = $this->Account_model->account_get_id_by_type($idAcc,$usrtype);
-
-            $page_data['idofertacarga'] = $idoferta;
-
-
-            //$limit=100;
-            //$page_data["misofertas"] = $this->Crud_model->fetch_tabla_ofertatransportista($idUserType,$limit,0);
-
-
-
-
-            $config = array();
-            $config["base_url"] = base_url() . "?".$usrtype."/missolicitudesenviadas/".$action."/".$idoferta;
-            $config["total_rows"] = 10; //$page_data['num_ofertas'];
-            $config["per_page"] = 20; //20 antes
-            $config["uri_segment"] = 5;
-
-            $config['first_link'] = '<i class="fa fa-fast-backward"></i>';
-            $config['first_tag_open'] = '<li>';
-            $config['first_tag_close'] = '</li>';
-
-            $config['last_link'] = '<i class="fa fa-fast-forward"></i>';
-            $config['last_tag_open'] = '<li>';
-            $config['last_tag_close'] = '</li>';
-
-            $config['next_link'] = '<i class="fa fa-step-forward"></i>';
-            $config['next_tag_open'] = '<li>';
-            $config['next_tag_close'] = '</li>';
-
-            $config['prev_link'] = '<i class="fa fa-step-backward"></i>';
-            $config['prev_tag_open'] = '<li>';
-            $config['prev_tag_close'] = '</li>';
-
-            $config['num_tag_open'] = '<li>';
-            $config['num_tag_close'] = '</li>';
-            $config['cur_tag_open'] = '<li class="active"><a href="#">';
-            $config['cur_tag_close'] = '</a></li>';
-            $choice = $config["total_rows"] / $config["per_page"];
-            $config["num_links"] = round($choice);
-
-            $this->pagination->initialize($config);
-            $page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
-            $limit = $config["per_page"];
-            $start = $page;
-             $modalidad = "enviadas";
-             $status = '1'; // solicitud en espera => 1
-
-            $missolicitudes = $this->Engine_model->get_match_ofertacarga_by_id($idUserType,$status,$limit,$start,$modalidad);
-
-
-
-            if($action == "detalle"){
-                $limit = 1;
-                $start = 0;
-                $modalidad = "none";
-                $page_data["detalle"]  = $this->Generadorcarga_model->get_ofertatransportista_by_id($idoferta,'',$modalidad, $limit, $start);
-
-            }
-
-            $page_data['missolicitudes'] = $missolicitudes;
-            $page_data["links"] = $this->pagination->create_links();
-            $page_data += $this->Generic_model->fillPageDataCounters($usrtype,$idUserType,$page_data,'missolicitudes_enviadas','Mis Solicitudes');
-
-            $this->load->view('index', $page_data);
-
-        }
-
- }
+  
 function missolicitudesrecibidas($action="show",$idoferta = 0){
     if ($this->session->userdata('user_login') != 1 || $this->session->userdata('enabled') != 1){
             redirect(base_url(), 'refresh');

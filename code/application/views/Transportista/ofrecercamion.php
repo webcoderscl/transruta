@@ -164,8 +164,8 @@
 				                	
 									echo '<div class="form-group">';
 				                	echo '<label for="exampleInputEmail1">Región de Destino Preferente</label>';
-				                	echo '<select name="region_destino" id="region_destino" data-parsley-required="true" class="form-control validation" onchange="ciudad_region(this.value,\'ciudad_destino\');">';
-				                	echo '<option value="-1" cod="-1">Seleccione Región</option>';
+				                	echo '<select name="region_destino" id="region_destino" data-parsley-required="true" class="form-control" onchange="ciudad_region(this.value,\'ciudad_destino\');">';
+				                	echo '<option value="-1" cod="-1">Todas las regiones</option>';
 			                            if(isset($regiones)){
 			                            	//print_r($regiones);
 				                             foreach($regiones as $s => $v):                      
@@ -206,10 +206,10 @@
 									echo '</div>';
 									echo '<div class="form-group">';
 									echo '<label for="exampleInputEmail1">Destino Preferente</label>';
-									echo '<select name="ciudad_destino" id="ciudad_destino" disabled class="form-control validation" 
+									echo '<select name="ciudad_destino" id="ciudad_destino" disabled class="form-control" 
 										onchange="get_distancia();" 
 										data-parsley-required="true">';   
-									echo '<option value="-1">Seleccione Destino</option>';
+									echo '<option value="-1">Todas las ciudades</option>';
 			                            if(isset($ciudades)){
 				                             foreach($ciudades as $s => $v):                      
 				                                echo '<option value="'.$v["idciudad"].'" cod="'.$v["idregion_fk"].'"';
@@ -223,10 +223,10 @@
 		                			echo '</select>';
 									echo '</div>';
 									
-									//echo '<div class="form-group">';
-									//echo '<label for="exampleInputEmail1">Dirección Específica de Destino</label>';
-									//echo '<input name="direccion_destino" data-parsley-required="true" class="form-control" type="text"/>';
-									//echo '</div>';
+									echo '<div class="form-group">';
+                                    echo '<label for="exampleInputEmail1">Kilometros Aproximados de Distancia</label>';
+                                    echo '<input name="distancia" data-parsley-required="true" class="form-control" type="text"/>';
+                                    echo '</div>';
 
 								echo '</div>';
 								//echo '<div class="col-md-12" style="padding-left: 0;">';
@@ -316,6 +316,7 @@
                         $(this).hide();
                     });
                                      
+                    $("#" + ciudad).find("option[cod='-1']").show();                    
                     $("#" + ciudad).find("option[cod='"+value+"']").each(function(){
                         //alert($(this).text());
                         $(this).show();

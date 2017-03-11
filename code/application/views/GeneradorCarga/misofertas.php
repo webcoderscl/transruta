@@ -252,8 +252,8 @@
 	   				//$(document).find("[name='fecha_disponibilidad']").val(fdisp);
 	   				$(document).find("[name='detalle']").val(datos_tabla[i].detalle);
 	   				$(document).find("[name='precio']").val(datos_tabla[i].precio);
-	   				$(document).find("[name='direccion_origen']").val(datos_tabla[i].direcion_origen);
-	   				$(document).find("[name='direccion_destino']").val(datos_tabla[i].direccion_destino);
+	   				$(document).find("[name='direccion_origen']").val(datos_tabla[i].origen_direccion);
+	   				$(document).find("[name='direccion_destino']").val(datos_tabla[i].destino_direccion);
 
 	   				$(document).find("[name='fecha_carga']").val(fcarga);
 	   				$(document).find("[name='fecha_descarga']").val(fdescarga);

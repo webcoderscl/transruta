@@ -253,10 +253,14 @@ class Generic_model extends CI_Model {
 		return -1;
 	}
 
-	public function fetch_tabla($tabla,$limit, $start)
+	public function fetch_tabla($tabla,$limit, $start, $where = false, $data = array())
 	{
 		$this->db->limit($limit, $start);
-		$query = $this->db->get($tabla); //add where comprado = 1 !
+		if($where){
+			$query = $this->db->get_where($tabla,$data);
+		}else{
+			$query = $this->db->get($tabla); //add where comprado = 1 !
+		}
 		return $this->doQueryObject($query);
 	}
 

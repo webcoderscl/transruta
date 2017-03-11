@@ -236,12 +236,7 @@
 											echo '<button onClick=modalChange("",nameform,title_upd,title_text_upd,'.$id.') class="btn btn-w-md btn-default" data-toggle="modal" data-target="#myModal" style="width:100%"><i class="fa fa-file-text-o" aria-hidden="true"></i> Detalles</button>';
 
 											echo '</div>';
-											if($v["solicitudes"] > 0){
-												echo '<div class="col-md-6">';
-												echo '<a href="'.site_url($urirequest).'" class="btn btn-w-md btn-warning" style="width:100%; color:#f7af3e;"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Solicitar</a>';
-												echo '</div>';
-
-											}
+											
 											echo '</td>';
 											echo '</div>';
 											echo '</tr>';

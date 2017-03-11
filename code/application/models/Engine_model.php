@@ -603,23 +603,15 @@ class Engine_model extends CI_Model {
 				 // $OT.destino_preferente = 0 => cualquier destino
 
 		$querystr = "SELECT $OC.*, $OT.* FROM ofertatransportista OT
-				JOIN $ofertacarga $OC ON
-				(
-	                $OC.origen_ciudad = $OT.ubicacion
-	                OR $OC.origen_region = $OT.region_ubicacion)
-				AND
-					($OC.destino_ciudad = $OT.destino_preferente
-	                 OR $OC.destino_region = $OT.region_destino
-	                 )
-				AND $OC.fecha_carga = $OT.fecha_disponibilidad
-				AND ($OC.tipo_camion = $OT.tipo_camion OR $OC.tipo_camion = '-1')
+				CROSS JOIN $ofertacarga $OC ON
+	                $OC.fecha_carga = $OT.fecha_disponibilidad
 				WHERE
 				($OC.estado_oferta = '0'
 				AND $OT.estado_oferta = '0')
 				AND
-				   ( DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) <= 0 )
+				   ( DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 72 HOUR ) ) <= 0 )
 	            AND
-				   ( DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) <= 0 )";
+				   ( DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 72 HOUR ) ) <= 0 )";
 
 		$where = "";
 		if($usertype == "Transportista"){
@@ -627,6 +619,7 @@ class Engine_model extends CI_Model {
 		}else if($usertype == "GeneradorCarga"){
 			$where =  " AND $OC.idgeneradorcarga_fk = $idUserType";
 		}
+		$where = "";
 
 		$querystr .= " " . $where;
 
@@ -661,11 +654,11 @@ class Engine_model extends CI_Model {
 							WHERE
 							($OC.estado_oferta IN ('0','1')
 				             AND
-				             DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) >0)
+				             DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 1 HOUR ) ) >0)
 							OR
 							($OT.estado_oferta IN ('0','1')
 				             AND
-				             DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) >0)
+				             DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 1 HOUR ) ) >0)
 							)
 					UNION ALL
 					(SELECT $OC.idofertacarga, $OT.idofertatransportista
@@ -678,11 +671,11 @@ class Engine_model extends CI_Model {
 							WHERE
 							($OC.estado_oferta IN ('0','1')
 				             AND
-				             DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) >0)
+				             DATEDIFF( NOW() , DATE_ADD( $OC.FECHA_PUBLICACION, INTERVAL 1 HOUR ) ) >0)
 							OR
 							($OT.estado_oferta IN ('0','1')
 				             AND
-				             DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 48 HOUR ) ) >0)
+				             DATEDIFF( NOW() , DATE_ADD( $OT.FECHA_PUBLICACION, INTERVAL 1 HOUR ) ) >0)
 							)
 						) T";
 

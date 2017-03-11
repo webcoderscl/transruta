@@ -28,7 +28,11 @@
 							title_text_upd = '<?php echo $modal_title_text_upd; ?>';
 							nameform = 'tablename_cu';
 						</script>
-			
+						
+						<?php 
+							$usr = $this->session->userdata('login_type');
+							$uriadd = "?".$usr."/regiones/add";
+						?>
 						<button	onClick=modalChange('<?php echo site_url().$uriadd ?>',nameform,title_add,title_text_add) class="btn btn-default btn-sm destacado-btn btn-right" data-toggle="modal" data-target="#myModal">
 							<i class="fa fa-plus" aria-hidden="true"></i> Agregar Región
 						</button>

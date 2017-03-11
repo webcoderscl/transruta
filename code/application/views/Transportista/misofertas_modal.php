@@ -59,7 +59,7 @@
                                     echo '<div class="form-group">';
                                     echo '<label for="exampleInputEmail1">Región de Destino</label>';
                                     echo '<select name="region_destino" id="region_destino" data-parsley-required="true" class="form-control" onchange="ciudad_region(this.value,\'ciudad_destino\');">';
-                                    echo '<option value="-1" cod="-1">Seleccione Región</option>';
+                                    echo '<option value="-1" cod="-1">Todas las regiones</option>';
                                         if(isset($regiones)){
                                             //print_r($regiones);
                                              foreach($regiones as $s => $v):                      
@@ -103,7 +103,7 @@
                                     echo '<select name="ciudad_destino" id="ciudad_destino" class="form-control" 
                                         onchange="get_distancia();" 
                                         data-parsley-required="true">';   
-                                    echo '<option value="-1">Seleccione Destino</option>';
+                                    echo '<option value="-1">Todas las ciudades</option>';
                                         if(isset($ciudades)){
                                              foreach($ciudades as $s => $v):                      
                                                 echo '<option value="'.$v["idciudad"].'" cod="'.$v["idregion_fk"].'"';
@@ -117,10 +117,10 @@
                                     echo '</select>';
                                     echo '</div>';
                                     
-                                    //echo '<div class="form-group">';
-                                    //echo '<label for="exampleInputEmail1">Dirección Específica de Destino</label>';
-                                    //echo '<input name="direccion_destino" data-parsley-required="true" class="form-control" type="text"/>';
-                                    //echo '</div>';
+                                    echo '<div class="form-group">';
+                                    echo '<label for="exampleInputEmail1">Kilometros Aproximados de Distancia</label>';
+                                    echo '<input name="distancia" data-parsley-required="true" class="form-control" type="text"/>';
+                                    echo '</div>';
 
                                 echo '</div>';
                                 //echo '<div class="col-md-12" style="padding-left: 0;">';
@@ -171,7 +171,7 @@
     //Listar las ciudades por region escogida
 
     function hideAll(){
-        $("#ciudad_origen").find("option").each(function(){ $(this).hide(); });
+        $("#ciudad_ubicacion").find("option").each(function(){ $(this).hide(); });
         $("#ciudad_destino").find("option").each(function(){ $(this).hide(); });    
     }
 
@@ -229,9 +229,9 @@
         }
         */
         
-    /*function get_distancia(){
+    function get_distancia(){
 
-            var val1 = $("#ciudad_origen").find("option:selected").val();
+            var val1 = $("#ciudad_ubicacion").find("option:selected").val();
             var val2 = $("#ciudad_destino").find("option:selected").val();
             if($.isNumeric( val1 ) && $.isNumeric( val2 ) && val1 != -1 && val2 != -1){
                 $.ajax({                                      
@@ -263,7 +263,7 @@
                 });
             }
              
-        }*/
+        }
 </script>
 
 

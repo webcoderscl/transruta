@@ -171,6 +171,18 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-success js-join-offer" data-idoferta="123" data-dismiss="modal"><i class="fa fa-check"></i> Solicitar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cerrar</button>
             </div>
+
+
+
+
+<script type="text/javascript">
+    $(".js-join-offer").click(function(){
+        var id = $(this).data('idoferta');
+        console.log(id);
+        alert("asdfg");
+    });
+</script>

@@ -29,7 +29,11 @@
 							nameform = 'tablename_cu';
 							nameform2 = 'otrotablename_cu';
 						</script>
-			
+						
+						<?php 
+							$usr = $this->session->userdata('login_type');
+							$uriadd = "?".$usr."/ciudades/add";
+						?>
 						<button onClick=modalChange('<?php echo site_url().$uriadd ?>',nameform,title_add,title_text_add) class="btn btn-default btn-sm destacado-btn btn-right" data-toggle="modal" data-target="#myModal">
 							<i class="fa fa-plus" aria-hidden="true"></i> Agregar Ciudad
 						</button>

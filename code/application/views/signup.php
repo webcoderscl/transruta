@@ -51,7 +51,7 @@
                 <div class="panel-body">
                     <?php  if(isset($info)) echo $info; ?>
                 	<?php include 'page_info.php'; ?>
-					<?php echo form_open('?Login/registrar/add',array('id' => 'formValidate2'));?>
+					<?php echo form_open('?Login/registrar/add',array('id' => 'formValidate2', 'onsubmit' => 'return validateFields();'));?>
                     <div class="bs-example" style="margin-bottom:15px;">
                         <div class="m-t-xs footer-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -67,22 +67,22 @@
 
                     <h3 style="font-size: 13px; font-weight: bold;">DATOS DE LA EMPRESA</h3>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="razon_social" class="form-control" placeholder="Razon Social" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="razon_social" class="form-control validation" placeholder="Razon Social" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
                         <input type="text" data-parsley-required="true" name="rut" pattern="^[0-9]{6,9}-[0-9Kk]$" class="form-control" placeholder="Rut Empresa" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="giro" class="form-control" placeholder="Giro" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="giro" class="form-control validation" placeholder="Giro" autocomplete="on"/>
                     </div>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="direccion" class="form-control" placeholder="Dirección" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="direccion" class="form-control validation" placeholder="Dirección" autocomplete="on" required/>
                     </div>
                     <?php 
                      echo '<div class="form-group m-bottom-md">';
-                    echo '<label for="exampleInputEmail1">Región de Destino</label>';
-                    echo '<select name="region_origen" id="region_origen" data-parsley-required="true" class="form-control validation" onchange="ciudad_region(this.value,\'ciudad_origen\');">';
-                    echo '<option value="-1" cod="-1">Seleccione Región</option>';
+                    echo '<label for="exampleInputEmail1">Región de Origen</label>';
+                    echo '<select name="region_origen" id="region_origen" data-parsley-required="true" class="form-control validation" onchange="ciudad_region(this.value,\'ciudad_origen\');" required>';
+                    echo '<option value="" cod="-1">Seleccione Región</option>';
                         if(isset($regiones)){
                             //print_r($regiones);
                              foreach($regiones as $s => $v):
@@ -100,9 +100,9 @@
                     echo '<div class="form-group">';
                     echo '<label for="exampleInputEmail1">Ciudad de Origen</label>';
                     echo '<select name="ciudad_origen" disabled id="ciudad_origen" data-parsley-required="true" class="form-control validation"
-                         onchange="get_distancia();"
+                         onchange="get_distancia();" required
                      >';
-                    echo '<option value="-1" cod="-1">Seleccione Ciudad</option>';
+                    echo '<option value="" cod="-1">Seleccione Ciudad</option>';
                         if(isset($ciudades)){
                              foreach($ciudades as $s => $v):
                                 echo '<option value="'.$v["idciudad"].'" cod="'.$v["idregion_fk"].'"';
@@ -116,38 +116,36 @@
                     echo '</select>';
                     echo '</div>';
                     ?>
-                    <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="ciudad" class="form-control" placeholder="Ciudad" autocomplete="on" required/>
-                    </div>
+                   
                     <div class="form-group m-bottom-md">
                         <select name="prefix_fono" style="width: 24%;display: inline-block;" class="form-control" data-parsley-required="true" required>
                             <option value="+56">+56</option>
                             <option value="+569">+569</option>
                         </select>
-                        <input type="text" style="width: 75%; display: inline-block;" data-parsley-required="true" name="fono" class="form-control" placeholder="Teléfono" pattern="^(\d{6,8})$" maxlength="9" autocomplete="on" required/>
+                        <input type="text" style="width: 75%; display: inline-block;" data-parsley-required="true" name="fono" class="form-control validation" placeholder="Teléfono" pattern="^(\d{6,8})$" maxlength="9" autocomplete="on" required/>
                     </div>
 
 
                     <h3 style="font-size: 13px; font-weight: bold;">DATOS DE USUARIO</h3>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="nombre_rep_legal" class="form-control" placeholder="Nombre" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="nombre_rep_legal" class="form-control validation" placeholder="Nombre" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="rut_rep_legal" pattern="^[0-9]{6,9}-[0-9Kk]$" class="form-control" placeholder="RUT" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="rut_rep_legal" pattern="^[0-9]{6,9}-[0-9Kk]$" class="form-control validation" placeholder="RUT" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
                         <input type="hidden" name="prefix_fono_rep_legal" value="+569" />
                         <input type="text" style="width: 17%;display: inline-block;" data-parsley-required="true" name="" class="form-control" placeholder="+569" autocomplete="on" disabled="disabled" value="+569" />
-                        <input type="text" style="width: 82%; display: inline-block;" data-parsley-required="true" name="fono_rep_legal" class="form-control" maxlength="9" placeholder="Celular" pattern="^(\d{7,8})$" autocomplete="on" required/>
+                        <input type="text" style="width: 82%; display: inline-block;" data-parsley-required="true" name="fono_rep_legal" class="form-control validation" maxlength="9" placeholder="Celular" pattern="^(\d{7,8})$" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
-                        <input type="text" data-parsley-required="true" name="Muser" class="form-control" placeholder="Correo Electrónico" autocomplete="on" required/>
+                        <input type="text" data-parsley-required="true" name="Muser" class="form-control validation" placeholder="Correo Electrónico" autocomplete="on" required/>
                     </div>
                     <div class="form-group m-bottom-md">
-                        <input type="password" data-parsley-required="true" name="Mpassword" class="form-control" placeholder="Contraseña..." autocomplete="off" required/>
+                        <input type="password" data-parsley-required="true" name="Mpassword" class="form-control validation" placeholder="Contraseña..." autocomplete="off" required/>
                     </div>
                     <div class="form-group m-bottom-md" style="padding-bottom:20px;">
-                        <input type="password" data-parsley-required="true" name="Mpassword_again" class="form-control" placeholder="Repita Contraseña..." autocomplete="off" required/>
+                        <input type="password" data-parsley-required="true" name="Mpassword_again" class="form-control validation" placeholder="Repita Contraseña..." autocomplete="off" required/>
                     </div>
 
 
@@ -286,6 +284,54 @@
                 $("#"+ciudad).find("option[value='-1']").prop('selected',true);
 
 
+        }
+
+
+         // VALIDACION DE CAMPOS
+    function validateField(selector){
+            var valid = true;
+            if ($(selector).is("SELECT")){
+                if($(selector).val() == -1){
+                    valid = false;
+                    $(selector).addClass("valid_error");
+                }else{
+                    $(selector).removeClass("valid_error");
+                }
+                //alert("is select!");
+            }else if($(selector).is("INPUT")){
+                if($(selector).val() == ""){
+                    valid = false;
+                    $(selector).addClass("valid_error");
+                }else{
+                    $(selector).removeClass("valid_error");
+                }
+            }else if($(selector).is("TEXTAREA")){
+                if($(selector).val() == ""){
+                    valid = false;
+                    $(selector).addClass("valid_error");
+                }else{
+                    $(selector).removeClass("valid_error");
+                }
+            }
+
+            return valid;
+        }
+
+        function validateFields(){
+            var valid = true;
+            $(".validation").each(function(){
+                valid = validateField(this);
+                //alert($(this).attr("name") + "--> "+$(this).val());
+            });
+
+            if(valid){
+                //$("#form_data").submit();
+                $("#error_msg").hide();
+            }
+            else{
+                $("#error_msg").show();
+            }
+            return valid;
         }
 
 	</script>

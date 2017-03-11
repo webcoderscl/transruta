@@ -60,7 +60,45 @@
     <?php $usr = $this->session->userdata('login_type'); ?>
     <script type="text/javascript">
         <?php echo 'usrtype = "'.$usr.'";'; ?>
-        
+        setInterval(
+        function (){
+
+
+                $.ajax({
+                  url: window.location.pathname+'?'+usrtype.toString()+'/actualizaMatchs',                  //the script to call to get data
+                  data: "",                        //you can insert url argumnets here to pass to api.php
+                                                   //for example "id=5&parent=6"
+                  dataType: 'json',                //data format
+                  success: function(data)          //on recieve of reply
+                  {
+
+                    //--------------------------------------------------------------------
+                    // 3) Update html content
+                    //--------------------------------------------------------------------
+
+                      console.log(data.total);
+                      console.log(data);
+                      //$(document).find("input[name='distancia']").val(data);
+                      if (data.total > 0){
+                        //alert("Tiene match pendientes por resolver.");
+                        //alert("actualizando... total match de registros encontrados:" + data.total + ", msg: "+data.msg);
+                      }
+
+
+                        //$.each( data, function( id, val ) {
+                          //items.push( "<li id='" + id + "'>" + data[id]['Muser']  +"</li>" );
+                        //});
+
+                        //$('#output').html(items.join("")); //Set output element html
+                    //}
+
+                    //recommend reading up on jquery selectors they are awesome
+                    // http://api.jquery.com/category/selectors/
+                  }
+                });
+
+
+        },1*60*1000);
     </script>
 
 </head>

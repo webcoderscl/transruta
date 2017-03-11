@@ -14,6 +14,7 @@ class Transportista extends CI_Controller
         $this->load->database();
         $this->load->model('Crud_model');
         $this->load->model('Transportista_model');
+        $this->load->model('Generic_model');        
         $this->load->library("pagination");
         //$this->load->library('encryption');
         /*cache control*/
@@ -339,13 +340,17 @@ class Transportista extends CI_Controller
             $idAcc = $this->session->userdata('userid');
             $usrtype = $this->session->userdata('login_type');
             $idUserType = $this->Account_model->account_get_id_by_type($idAcc,$usrtype);
-
+            $page_data["ciudades"] = $this->Generic_model->fetch_tabla('ciudad',600,0);
+            $page_data["regiones"] = $this->Generic_model->fetch_tabla('region',20,0);
             if($action == "upd" && $mode == "emp"){
                 $razon_social = $this->input->post('razon_social');
                  $rut = $this->input->post('rut');
                  $giro = $this->input->post('giro');
                  $direccion = $this->input->post('direccion');
-                 $ciudad = $this->input->post('ciudad');
+                 $ciudad_origen = $this->input->post('ciudad_origen');
+                 $region_origen = $this->input->post('region_origen');
+                 //$ciudad = $this->input->post('ciudad');
+                 $ciudad = '';
                  $prefix_fono = $this->input->post('prefix_fono');
                  $fono = $this->input->post('fono');
                  $fono = $prefix_fono." ".$fono;
@@ -355,6 +360,8 @@ class Transportista extends CI_Controller
                               "RUT" => $rut,
                               "giro" => $giro,
                               "direccion" => $direccion,
+                              "idregion_origen" => $region_origen,
+                              "idciudad_origen" => $ciudad_origen,
                               "ciudad" => $ciudad,
                               "fono" => $fono,
                               "pag_web" => $pag_web,
@@ -458,6 +465,7 @@ class Transportista extends CI_Controller
         echo json_encode($data);
     }
 
+
     function actualizaMatchs(){
          $idAcc = $this->session->userdata('userid');
         $usrtype = $this->session->userdata('login_type');
@@ -496,6 +504,7 @@ class Transportista extends CI_Controller
                 $direccion_destino  = ''; //$this->input->post('direccion_destino');
                 $region_origen      = $this->input->post('region_origen');
                 $region_destino     = $this->input->post('region_destino');
+                $distancia            = $this->input->post('distancia');
                 $detalle            = $this->input->post('detalles');
                 $aux_disp           = $this->input->post('fecha_disponibilidad');
                 $aux_strtime = strtotime($aux_disp);
@@ -512,6 +521,7 @@ class Transportista extends CI_Controller
                                "direccion_destino" => $direccion_destino,
                                "detalle" => $detalle,
                                "fecha_disponibilidad" => $fecha_disponibilidad,
+                               "distancia" => $distancia,
                                "fecha_publicacion" =>  date("Y-m-d H:i:s"),
                                "idtransportista_fk" => $idUserType
                               );
@@ -520,7 +530,8 @@ class Transportista extends CI_Controller
                 $this->Engine_model->match_ofertas($usrtype,$idUserType);
                 $msg = "Oferta Creada satisfactoriamente... Revise la oferta en sección Mis Ofertas";
                 $page_data["msg_alerta"] = $msg;
-
+                $this->Engine_model->match_ofertas($usrtype,$idUserType);
+                
             }
             $page_data += $this->Generic_model->fillPageDataCounters($usrtype,$idUserType,$page_data,'ofrecercamion','Ofrecer Camion');
             $this->load->view('index', $page_data);
@@ -672,6 +683,7 @@ class Transportista extends CI_Controller
                 $region_destino     = $this->input->post('region_destino');
 
                 $detalle            = $this->input->post('detalles');
+                $distancia            = $this->input->post('distancia');
                 $aux_disp           = $this->input->post('fecha_disponibilidad');
                 $aux_strtime = strtotime($aux_disp);
                 $fecha_disponibilidad = date("Y-m-d H:i:s",$aux_strtime);
@@ -688,6 +700,7 @@ class Transportista extends CI_Controller
                                "detalle" => $detalle,
                                "fecha_disponibilidad" => $fecha_disponibilidad,
                                "fecha_publicacion" =>  date("Y-m-d H:i:s"),
+                               "distancia" =>  $distancia,
                                "idtransportista_fk" => $idUserType
                               );
                 $this->Transportista_model->ofertatransportista_update_by_id($idoferta,$data);

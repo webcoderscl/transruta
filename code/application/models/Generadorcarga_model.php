@@ -203,6 +203,7 @@ class Generadorcarga_model extends CI_Model {
 		        $OC.tipo_camion, 		$OC.distancia, 					$OC.fecha_carga,
 		        $OC.fecha_descarga,		$OC.cantidad_carga, 			$OC.tipo_carga,
 		        $OC.precio, 			$OC.detalle,
+		        $OC.origen_direccion, $OC.destino_direccion,
 				$OC.ORIGEN_CIUDAD as idorigen_ciudad, $OC.DESTINO_CIUDAD as iddestino_ciudad,
 				$OC.ORIGEN_REGION as idorigen_region, $OC.DESTINO_REGION as iddestino_region,
 				$C1.NOMBRE AS origen_ciudad, $C2.NOMBRE AS destino_ciudad,
@@ -223,6 +224,7 @@ class Generadorcarga_model extends CI_Model {
 			    T.tipo_camion, 		T.distancia, 			T.fecha_carga,
 			    T.fecha_descarga,	T.cantidad_carga, 		T.tipo_carga,
 			    T.precio, 			T.detalle,				T.idorigen_ciudad,
+			    T.origen_direccion, T.destino_direccion,
 			    T.iddestino_ciudad, T.idorigen_region, 		T.iddestino_region,
 				T.origen_ciudad, 	T.destino_ciudad,
 				T.origen_region, 	T.destino_region

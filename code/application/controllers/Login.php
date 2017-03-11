@@ -11,6 +11,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->load->model('Crud_model');
         $this->load->model('Email_model');
+        $this->load->model('Generic_model');        
         $this->load->database();
         /*cash control*/
         $this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
@@ -172,10 +173,10 @@ class Login extends CI_Controller
             $rut = $this->input->post('rut');
             $razon_social = $this->input->post('razon_social');
             $direccion = $this->input->post('direccion');
-            $ciudad = $this->input->post('ciudad');
+                        
             $ciudad_origen = $this->input->post('ciudad_origen');
             $region_origen = $this->input->post('region_origen');
-
+            $ciudad = $this->Generic_model->get_field_by_id('ciudad', $ciudad_origen,'nombre')->nombre;
 
 	        //USEFUL TO CHOOSE FILE OF VIEWS
 
